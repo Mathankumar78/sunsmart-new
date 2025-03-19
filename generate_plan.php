@@ -31,6 +31,34 @@
                 $language = "English";
             }
 
+
+            $city_coordinates = [
+                "Sydney" => ["lat" => "-33.8688", "lon" => "151.2093"],
+                "Melbourne" => ["lat" => "-37.8136", "lon" => "144.9631"],
+                "Brisbane" => ["lat" => "-27.4698", "lon" => "153.0251"],
+                "Perth" => ["lat" => "-31.9505", "lon" => "115.8605"],
+                "Adelaide" => ["lat" => "-34.9285", "lon" => "138.6007"],
+                "Gold Coast" => ["lat" => "-28.0167", "lon" => "153.4000"],
+                "Canberra" => ["lat" => "-35.2809", "lon" => "149.1300"],
+                "Hobart" => ["lat" => "-42.8821", "lon" => "147.3272"],
+                "Darwin" => ["lat" => "-12.4634", "lon" => "130.8456"],
+                "Newcastle" => ["lat" => "-32.9283", "lon" => "151.7817"],
+                "Wollongong" => ["lat" => "-34.4240", "lon" => "150.8931"],
+                "Geelong" => ["lat" => "-38.1499", "lon" => "144.3617"],
+                "Cairns" => ["lat" => "-16.9203", "lon" => "145.7710"],
+                "Townsville" => ["lat" => "-19.2589", "lon" => "146.8169"],
+                "Toowoomba" => ["lat" => "-27.5598", "lon" => "151.9507"]
+            ];
+            
+            // Get the selected location and find lat/lon
+            if (isset($_GET['location']) && array_key_exists($_GET['location'], $city_coordinates)) {
+                $latitude = $city_coordinates[$_GET['location']]['lat'];
+                $longitude = $city_coordinates[$_GET['location']]['lon'];
+            } else {
+                $latitude = '0';
+                $longitude = '0';
+            }
+
             // OpenWeather API for UV Index
             $env = parse_ini_file(__DIR__ . "/.env");
 
@@ -40,15 +68,19 @@
                 die("⚠️ API Key is missing! Check .env file.");
             }
             $uvIndex = 0;
-            $apiUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=$apiKey&lat=$latitude&lon=$longitude";
-
+           
+            $apiUrl = "https://api.weatherapi.com/v1/current.json?key=$apiKey&q=$latitude,$longitude";
             $response = file_get_contents($apiUrl);
             if ($response !== false) {
                 $uvData = json_decode($response, true);
-                if (isset($uvData['value'])) {
-                    $uvIndex = $uvData['value'];
+
+                // Corrected UV Index extraction from "current" object
+                if (isset($uvData['current']['uv'])) {
+                    $uvIndex = $uvData['current']['uv'];
                 }
             }
+
+            
 
             // UV Index Categories and Recommendations
             $uvRecommendations = [
@@ -76,7 +108,7 @@
                     "reapply_reminder" => "Reapply Reminder",
                     "sun_safety_tips" => "Sun Safety Tips",
                     "spf_value" => $spf_recommendation,
-                    "reapply_time" => "Reapply every $reapply_time",
+                    "reapply_time" => "$reapply_time",
                     "safety_tips" => [
                         "Wear sunglasses and a hat for extra protection.",
                         "Seek shade between 10 AM - 4 PM.",
@@ -118,8 +150,33 @@
                         "上午10点到下午4点之间寻找阴凉处。",
                         "保持水分充足，并充分涂抹防晒霜。"
                     ]
+                ],
+                "Russian" => [
+                    "recommended_sunscreen" => "Рекомендуемый солнцезащитный крем",
+                    "reapply_reminder" => "Напоминание о повторном применении",
+                    "sun_safety_tips" => "Советы по защите от солнца",
+                    "spf_value" => $spf_recommendation,
+                    "reapply_time" => "Повторно наносите каждые $reapply_time",
+                    "safety_tips" => [
+                        "Носите солнцезащитные очки и шляпу для дополнительной защиты.",
+                        "Находитесь в тени с 10:00 до 16:00.",
+                        "Пейте много воды и наносите солнцезащитный крем обильно."
+                    ]
+                ],
+                "Mandarin" => [
+                    "recommended_sunscreen" => "推荐的防晒霜",
+                    "reapply_reminder" => "重新涂抹提醒",
+                    "sun_safety_tips" => "防晒安全提示",
+                    "spf_value" => $spf_recommendation,
+                    "reapply_time" => "每 $reapply_time 重新涂抹",
+                    "safety_tips" => [
+                        "佩戴太阳镜和帽子以提供额外保护。",
+                        "上午10点到下午4点之间寻找阴凉处。",
+                        "保持充足水分，并慷慨地涂抹防晒霜。"
+                    ]
                 ]
             ];
+
 
             // Get Translated Texts
             $translated_texts = $translations[$language];
@@ -163,56 +220,42 @@
                             </div>
                         </div>
 
-                        <!-- Protection Recommendations -->
-                        <h2 class="title title-simple text-left pt-3">
-                            <?php echo htmlspecialchars($translations[$language]["sun_safety_tips"] ?? "Sun Safety Tips"); ?>
-                        </h2>
+                       
+                        
 
-                        <div class="order-details mb-1">
-                            <table class="order-details-table">
-                                <thead>
-                                    <tr class="summary-subtotal">
-                                        <td>
-                                            <h3 class="summary-subtitle">
-                                                <?php echo htmlspecialchars($translations[$language]["recommended_sunscreen"] ?? "Recommended Sunscreen"); ?>
-                                            </h3>
-                                        </td>
-                                        <td>
-                                            <h3 class="summary-subtitle">
-                                                <?php echo htmlspecialchars($translations[$language]["spf_value"] ?? $spf_recommendation); ?>
-                                            </h3>
-                                        </td>      
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="product-name">
-                                            <?php echo htmlspecialchars($translations[$language]["reapply_reminder"] ?? "Reapply Reminder"); ?>
-                                        </td>
-                                        <td class="product-price">
-                                            <?php echo htmlspecialchars($translations[$language]["reapply_time"] ?? "Reapply every $reapply_time"); ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-name">
-                                            <?php echo htmlspecialchars($translations[$language]["sun_safety_tips"] ?? "Sun Safety Tips"); ?>
-                                        </td>
-                                        <td class="product-price">
-                                            <ul>
-                                                <?php 
-                                                $safety_tips = $translations[$language]["safety_tips"] ?? [];
-                                                foreach ($safety_tips as $tip) {
-                                                    echo "<li>" . htmlspecialchars($tip) . "</li>";
-                                                }
-                                                ?>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <section class="mt-7">
+                            <div class="row">
+                                <!-- Left Side: Recommended Sunscreen & Reapply Reminder -->
+                                <div class="col-md-6">
+                                    <blockquote class="text-bd-left sun-blockquote">
+                                        <h4>🌞 Recommended Sunscreen</h4>
+                                        <p><strong><?php echo htmlspecialchars($translations[$language]["spf_value"] ?? $spf_recommendation); ?></strong></p>
+
+                                        <h4>🔄 Reapply Reminder</h4>
+                                        <p><strong><?php echo htmlspecialchars($translations[$language]["reapply_time"] ?? "Reapply every $reapply_time"); ?></strong></p>
+                                    </blockquote>
+                                </div>
+
+                                <!-- Right Side: Sun Safety Tips -->
+                                <div class="col-md-6">
+                                    <blockquote class="text-bd-left sun-blockquote">
+                                        <h4>☀️ Sun Safety Tips</h4>
+                                        <ul class="sun-safety-list">
+                                            <?php 
+                                            $safety_tips = $translations[$language]["safety_tips"] ?? [];
+                                            foreach ($safety_tips as $tip) {
+                                                echo "<li>✅ " . htmlspecialchars($tip) . "</li>";
+                                            }
+                                            ?>
+                                        </ul>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </section>
+
 
                         <br>
+
 
                         <!-- Copy Link Button -->
                         <a class="btn btn-primary btn-block btn-icon-right" href="#" id="copyButton">
@@ -254,5 +297,7 @@
     
     <?PHP include "include/mobilemenu.php"?>
     <?PHP include "include/script.php"?>
+
+    
 </body>
 </html>
