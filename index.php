@@ -114,38 +114,48 @@ error_reporting(E_ALL);
                                     }
                                 }
                             }">
+                            <a href="hindsight.php">
                             <div class="icon-box icon-box-side icon-box1 appear-animate" data-animation-options="{
                                     'name': 'fadeInRightShorter',
                                     'delay': '.3s'
                                 }">
-                                <i class="icon-box-icon d-icon-lightbulb"></i>
+                               
+                                <i class="icon-box-icon fas fa-sun"></i>
+                              
                                 <div class="icon-box-content">
-                                    <h4 class="icon-box-title">UV Protection Advice</h4>
+                                    <h4 class="icon-box-title">UV Protection advice</h4>
                                     <p>Personalized sun safety tips!</p>
                                 </div>
                             </div>
+                            </a>
 
+                            <a href="personalized_link.php">
                             <div class="icon-box icon-box-side icon-box2 appear-animate" data-animation-options="{
                                     'name': 'fadeInRightShorter',
                                     'delay': '.4s'
                                 }">
-                                <i class="icon-box-icon d-icon-heartbeat"></i>
+                               
+                                <i class="icon-box-icon fas fa-address-card"></i>
+                                
                                 <div class="icon-box-content">
-                                    <h4 class="icon-box-title">Dermatologist-Approved</h4>
+                                    <h4 class="icon-box-title">Get Your Personalized Link</h4>
                                     <p>Stay SunSmart with skin protection guidance.</p>
                                 </div>
                             </div>
+                            </a>
 
+                            <a href="skintype.php">
                             <div class="icon-box icon-box-side icon-box3 appear-animate" data-animation-options="{
                                     'name': 'fadeInRightShorter',
                                     'delay': '.5s'
                                 }">
-                                <i class="icon-box-icon d-icon-info-circle"></i>
+                                <i class="icon-box-icon fas fa-grin-beam-sweat"></i>
                                 <div class="icon-box-content">
-                                    <h4 class="icon-box-title">Safe & Reliable Information</h4>
-                                    <p>Get trusted UV exposure updates—100%!</p>
+                                    <h4 class="icon-box-title">Get to know your skin type</h4>
+                                    <p>Find out your skin type & stay sun-safe! 🌞</p>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     </div>
                 </section>

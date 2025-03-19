@@ -8,26 +8,43 @@ if (isset($_GET['fetchData']) && isset($_GET['year']) && isset($_GET['sex'])) {
     ob_clean();
 
     try {
+        // Get user input
         $year = $_GET['year'];
         $sex = $_GET['sex'];
 
-        $stmt = $pdo->prepare("SELECT age_group, SUM(count) as incidence_count FROM cancer_incidence_age 
-                               WHERE year = :year AND sex = :sex AND age_group != 'All ages combined'
-                               GROUP BY age_group 
-                               ORDER BY FIELD(age_group, '00-04', '05-09', '10-14', '15-19', '20-24', 
-                                                       '25-29', '30-34', '35-39', '40-44', '45-49', 
-                                                       '50-54', '55-59', '60-64', '65-69', '70-74', 
-                                                       '75-79', '80-84', '85-89', '90+')");
-        $stmt->execute(['year' => $year, 'sex' => $sex]);
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Prepare query using MySQLi
+        $query = "SELECT age_group, SUM(count) as incidence_count FROM cancer_incidence_age 
+                  WHERE year = ? AND sex = ? AND age_group != 'All ages combined' 
+                  GROUP BY age_group 
+                  ORDER BY FIELD(age_group, '00-04', '05-09', '10-14', '15-19', '20-24', 
+                                          '25-29', '30-34', '35-39', '40-44', '45-49', 
+                                          '50-54', '55-59', '60-64', '65-69', '70-74', 
+                                          '75-79', '80-84', '85-89', '90+')";
 
-        echo json_encode(['age_groups' => array_column($data, 'age_group'), 'incidence_counts' => array_column($data, 'incidence_count')]);
+        // Use MySQLi Prepared Statements
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("ss", $year, $sex);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Fetch data
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+
+        // Send JSON response
+        echo json_encode([
+            'age_groups' => array_column($data, 'age_group'), 
+            'incidence_counts' => array_column($data, 'incidence_count')
+        ]);
         exit;
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
         exit;
     }
 }
+
 
 // ..
 
@@ -217,8 +234,11 @@ $highest_uv_time = ["00:00 - 04:00", "04:00 - 08:00", "08:00 - 12:00", "12:00 - 
                                 <label for="yearSelect">🗓️ Year:</label>
                                 <select id="yearSelect" onchange="updateChart()">
                                     <?php
-                                    $stmt = $pdo->query("SELECT DISTINCT year FROM cancer_incidence_age ORDER BY year ASC");
-                                    foreach ($stmt->fetchAll(PDO::FETCH_COLUMN) as $year) {
+                                    $query = "SELECT DISTINCT year FROM cancer_incidence_age ORDER BY year ASC";
+                                    $result = $mysqli->query($query);
+                                    
+                                    while ($row = $result->fetch_assoc()) {
+                                        $year = $row['year'];
                                         echo "<option value='$year'>$year</option>";
                                     }
                                     ?>
@@ -227,8 +247,11 @@ $highest_uv_time = ["00:00 - 04:00", "04:00 - 08:00", "08:00 - 12:00", "12:00 - 
                                 <label for="sexSelect">⚧ Gender:</label>
                                 <select id="sexSelect" onchange="updateChart()">
                                     <?php
-                                    $stmt = $pdo->query("SELECT DISTINCT sex FROM cancer_incidence_age");
-                                    foreach ($stmt->fetchAll(PDO::FETCH_COLUMN) as $sex) {
+                                    $query = "SELECT DISTINCT sex FROM cancer_incidence_age";
+                                    $result = $mysqli->query($query);
+                                    
+                                    while ($row = $result->fetch_assoc()) {
+                                        $sex = $row['sex'];
                                         echo "<option value='$sex'>$sex</option>";
                                     }
                                     ?>
