@@ -73,22 +73,18 @@ function getLatLon($location) {
 }
 
 function getUVIndex($lat, $lon) {
+    
     global $apiKey;
 
     $url = "https://api.weatherapi.com/v1/current.json?key=" . $apiKey . "&q=" . $lat . "," . $lon;
     $response = @file_get_contents($url);
-
-    if (!$response) {
-        return "❌ API Error: No response from WeatherAPI";
-    }
-
     $data = json_decode($response, true);
 
-    if (!isset($data['current']['uv'])) {
-        return "⚠️ UV data not available for this location";
+    if (isset($data['current']['uv'])) {
+        return $data['current']['uv'];
     }
 
-    return $data['current']['uv'];
+    return "UV data not available";
 }
 
 
