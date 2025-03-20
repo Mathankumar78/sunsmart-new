@@ -1,11 +1,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>SunSmart</title>
+    <title>SunSafe</title>
 
     <meta name="keywords" content="" />
-    <meta name="description" content="SunSmart">
-    <meta name="author" content="SunSmart">
+    <meta name="description" content="Sunafe">
+    <meta name="author" content="Sunsafe">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/icons/favicon.png">

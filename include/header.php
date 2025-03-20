@@ -32,23 +32,20 @@
                 <nav class="main-nav">
                         <ul class="menu">
                             <li class="active">
-                                <a href="#">Home</a>
+                                <a href="index.php" style="font-size: 18px;">Home</a>
                             </li>
 
                             <li>
-                                <a href="live_information.php">live information</a>
+                                <a href="live_information.php" style="font-size: 18px;">UV index</a>
                             </li>
 
                             <li>
-                                <a href="#">Hindsight</a>
+                                <a href="hindsight.php" style="font-size: 18px;">ANALYTICS</a>
                             </li>
 
-                            <li>
-                                <a href="#">Contact Us</a>
-                            </li>
 
                             <li>
-                                <a href="#">About Us</a>
+                                <a href="aboutus.php" style="font-size: 18px;">About Us</a>
                             </li>
                             
                                 

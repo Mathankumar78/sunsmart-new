@@ -31,17 +31,12 @@
             </li>
 
             <li>
-                <a href="#">Hindsight</a>
+                <a href="hindsight.php">Hindsight</a>
             </li>
-
             <li>
-                <a href="#">Contact Us</a>
+                <a href="aboutus.php">About Us</a>
             </li>
-
-            <li>
-                <a href="#">About Us</a>
-            </li>
-            <li><a href="#">!</a></li>
+            
         </ul>
     </div>
 </div>

@@ -9,18 +9,7 @@
                             <!-- End of FooterLogo -->
                         </div>
                         <div class="col-lg-9">
-                            <div class="widget widget-newsletter form-wrapper form-wrapper-inline">
-                                <div class="newsletter-info mx-auto mr-lg-2 ml-lg-4">
-                                    <h4 class="widget-title">Subscribe to our Newsletter</h4>
-                                    <p>Get all the latest information on Events, Sales and Offers.</p>
-                                </div>
-                                <form action="#" class="input-wrapper input-wrapper-inline">
-                                    <input type="email" class="form-control" name="email" id="newsletter-email1"
-                                        placeholder="Email address here..." required />
-                                    <button class="btn btn-primary btn-md ml-2" type="submit">subscribe<i
-                                            class="d-icon-arrow-right"></i></button>
-                                </form>
-                            </div>
+                            
                             <!-- End of Newsletter -->
                         </div>
                     </div>
@@ -38,18 +27,13 @@
                                     </li>
                                     <li>
                                         <label>Email:</label>
-                                        <a href="">mail@sunsmart.com.au</a>
+                                        <a href="">mail@safe.com.au</a>
                                     </li>
                                     <li>
                                         <label>Address:</label>
                                         <a href="#">Monash University Clayton Campus</a>
                                     </li>
-                                    <li>
-                                        <label>WORKING DAYS/HOURS</label>
-                                    </li>
-                                    <li>
-                                        <a href="#">Mon - Sun / 9:00 AM - 8:00 PM</a>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <!-- End of Widget -->
@@ -58,9 +42,9 @@
                             <div class="widget ml-lg-4">
                                 <h4 class="widget-title">Our Features</h4>
                                 <ul class="widget-body">
-                                    <li><a href="#"></a></li>
-                                    <li><a href="#">Live Information</a></li>
-                                    <li><a href="#">Hindsights</a></li>
+                                    <li><a href="index.php"></a></li>
+                                    <li><a href="live_information.php">Live Information</a></li>
+                                    <li><a href="hindsight.php">Hindsights</a></li>
                                 </ul>
                             </div>
                             <!-- End of Widget -->
@@ -69,8 +53,7 @@
                             <div class="widget ml-lg-4">
                                 <h4 class="widget-title">Contact Info</h4>
                                 <ul class="widget-body">
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="aboutus.php">About Us</a></li>
                                 </ul>
                             </div>
                             <!-- End of Widget -->
@@ -84,7 +67,7 @@
                         
                     </div>
                     <div class="footer-center">
-                        <p class="copyright">SunSmart &copy; 2025. All Rights Reserved</p>
+                        <p class="copyright">SunSafe &copy; 2025. All Rights Reserved</p>
                     </div>
                     <div class="footer-right">
                         <!-- <div class="social-links">

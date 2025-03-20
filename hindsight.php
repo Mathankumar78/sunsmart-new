@@ -158,10 +158,10 @@ $highest_uv_time = ["00:00 - 04:00", "04:00 - 08:00", "08:00 - 12:00", "12:00 - 
 
                             <h3 class="uv-subtitle">🔎 Search UV Index for Any Location</h3>
                             <p class="uv-description">
-                                Want to check the **UV Index** for your city or any other place in Australia?  
-                                Use the search bar on the right to **find real-time UV levels** and  
+                                Want to check the <strong>UV Index</strong> for your city or any other place in Australia?  
+                                Use the search bar on the right to <strong>find real-time UV levels</strong> and  
                                 understand the best sun protection measures for your area.  
-                                Simply enter a **city or suburb name** and get instant results!
+                                Simply enter a <strong>city or suburb name</strong> and get instant results!
                             </p>
                         </div>
 
@@ -180,12 +180,12 @@ $highest_uv_time = ["00:00 - 04:00", "04:00 - 08:00", "08:00 - 12:00", "12:00 - 
                                     <h2 class="uv-city">🌞 <?php echo htmlspecialchars($city . ", " . $state); ?></h2>
                                     <p class="uv-info"><strong>Current UV Index:</strong> <span class="uv-box"><?php echo $current_uv; ?></span></p>
 
-                                    <hr>
+                                   
 
-                                    <h3 class="uv-highest">Highest UV Index of the Day: 
+                                    <!-- <h3 class="uv-highest">Highest UV Index of the Day: 
                                         <span class="highlight"><?php echo $highest_uv; ?></span> at 
                                         <span class="highlight"><?php echo $highest_uv_time; ?></span>
-                                    </h3>
+                                    </h3> -->
 
                                     <hr>
 
@@ -207,7 +207,7 @@ $highest_uv_time = ["00:00 - 04:00", "04:00 - 08:00", "08:00 - 12:00", "12:00 - 
                     <div class="melanoma-left">
                         <h2>Understanding Melanoma Incidence</h2>
                         <p>
-                            Melanoma is a serious type of skin cancer caused primarily by **excessive UV radiation exposure**. 
+                            Melanoma is a serious type of skin cancer caused primarily by <stong>excessive UV radiation exposure</strong> 
                             It can develop at any age, but the risk increases significantly as people get older.
                         </p>
 

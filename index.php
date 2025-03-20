@@ -11,7 +11,7 @@ error_reporting(E_ALL);
 
 <body class="home">
     <div class="page-wrapper">
-        <h1 class="d-none">SunSmart</h1>
+        <h1 class="d-none">SunSafe</h1>
 
         <?PHP include "include/header.php"?>
 
@@ -33,7 +33,7 @@ error_reporting(E_ALL);
                                     <img src="images/banner.png"
                                         class="slide-animate intro-slide1-img"
                                         data-animation-options="{'name': 'fadeInLeftShorter', 'duration': '1.2s', 'delay': '.5s'}"
-                                        alt="intro-banner" width="1180" height="630" />
+                                        alt="intro-banner" width="1180" height="430" />
                                     <div class="float-svg-container float-svg-1 slide-animate"
                                         data-animation-options="{'name': 'fadeInRightShorter', 'duration': '1s', 'delay': '.2s'}">
                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,7 @@ error_reporting(E_ALL);
                                     <p class="slide-animate ls-m text-dark font-primary mb-6"
                                         data-animation-options="{'name': 'fadeInUpShorter', 'duration': '1.2s', 'delay': '1s'}">
                                         Instant Access – No Signup Needed!</p>
-                                    <a href="personalized_link.php" class="btn btn-outline btn-dark slide-animate"
+                                    <a href="personalized_link.php" class="btn btn-primary slide-animate"
                                         data-animation-options="{'name': 'fadeInUpShorter', 'duration': '1s', 'delay': '1.8s'}">GET MY LINK NOW</a>
                                 </div>
                             </div>
