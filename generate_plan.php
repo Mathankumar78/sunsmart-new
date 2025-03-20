@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?PHP include "include/head.php"?>
+<?PHP 
+header('Content-Type: text/html; charset=utf-8');
+
+include "include/head.php"?>
 
 
 <body>
@@ -84,12 +87,36 @@
 
             // UV Index Categories and Recommendations
             $uvRecommendations = [
-                "Low" => ["SPF 15-30", "Reapply every 4 hours"],
-                "Moderate" => ["SPF 30+", "Reapply every 2 hours"],
-                "High" => ["SPF 50+", "Reapply every 60 minutes"]
+                "Low" => [
+                    "SPF" => "SPF 15-30",
+                    "Reapply" => "Reapply every 4 hours",
+                    "Tips" => [
+                        "It’s safe to be outdoors, but don’t forget to stay hydrated.",
+                        "Wear sunglasses with UV protection.",
+                        "Consider wearing a hat for additional shade."
+                    ]
+                ],
+                "Moderate" => [
+                    "SPF" => "SPF 30+",
+                    "Reapply" => "Reapply every 2 hours",
+                    "Tips" => [
+                        "Limit direct sun exposure between 10 AM - 4 PM.",
+                        "Apply sunscreen generously before going outside.",
+                        "Seek shade when possible."
+                    ]
+                ],
+                "High" => [
+                    "SPF" => "SPF 50+",
+                    "Reapply" => "Reapply every 60 minutes",
+                    "Tips" => [
+                        "Avoid going outside during peak hours (10 AM - 4 PM).",
+                        "Wear protective clothing, sunglasses, and a wide-brimmed hat.",
+                        "Use sunscreen with broad-spectrum protection."
+                    ]
+                ]
             ];
 
-            // Determine SPF & Reapplication Time
+            // Determine SPF, Reapply Time, and Safety Tips Based on UV Index
             if ($uvIndex < 3) {
                 $uvLevel = "Low";
             } elseif ($uvIndex >= 3 && $uvIndex < 6) {
@@ -98,8 +125,10 @@
                 $uvLevel = "High";
             }
 
-            $spf_recommendation = $uvRecommendations[$uvLevel][0];
-            $reapply_time = $uvRecommendations[$uvLevel][1];
+            // Get the correct recommendations based on UV Level
+            $spf_recommendation = $uvRecommendations[$uvLevel]["SPF"];
+            $reapply_time = $uvRecommendations[$uvLevel]["Reapply"];
+            $safety_tips = $uvRecommendations[$uvLevel]["Tips"];
 
             // Translations for Multi-language Support
             $translations = [
@@ -149,30 +178,6 @@
                         "戴上太阳镜和帽子以获得额外保护。",
                         "上午10点到下午4点之间寻找阴凉处。",
                         "保持水分充足，并充分涂抹防晒霜。"
-                    ]
-                ],
-                "Russian" => [
-                    "recommended_sunscreen" => "Рекомендуемый солнцезащитный крем",
-                    "reapply_reminder" => "Напоминание о повторном применении",
-                    "sun_safety_tips" => "Советы по защите от солнца",
-                    "spf_value" => $spf_recommendation,
-                    "reapply_time" => "Повторно наносите каждые $reapply_time",
-                    "safety_tips" => [
-                        "Носите солнцезащитные очки и шляпу для дополнительной защиты.",
-                        "Находитесь в тени с 10:00 до 16:00.",
-                        "Пейте много воды и наносите солнцезащитный крем обильно."
-                    ]
-                ],
-                "Mandarin" => [
-                    "recommended_sunscreen" => "推荐的防晒霜",
-                    "reapply_reminder" => "重新涂抹提醒",
-                    "sun_safety_tips" => "防晒安全提示",
-                    "spf_value" => $spf_recommendation,
-                    "reapply_time" => "每 $reapply_time 重新涂抹",
-                    "safety_tips" => [
-                        "佩戴太阳镜和帽子以提供额外保护。",
-                        "上午10点到下午4点之间寻找阴凉处。",
-                        "保持充足水分，并慷慨地涂抹防晒霜。"
                     ]
                 ]
             ];
@@ -229,10 +234,10 @@
                                 <div class="col-md-6">
                                     <blockquote class="text-bd-left sun-blockquote">
                                         <h4>🌞 Recommended Sunscreen</h4>
-                                        <p><strong><?php echo htmlspecialchars($translations[$language]["spf_value"] ?? $spf_recommendation); ?></strong></p>
+                                        <p><strong><?php echo htmlspecialchars($spf_recommendation); ?></strong></p>
 
                                         <h4>🔄 Reapply Reminder</h4>
-                                        <p><strong><?php echo htmlspecialchars($translations[$language]["reapply_time"] ?? "Reapply every $reapply_time"); ?></strong></p>
+                                        <p><strong><?php echo htmlspecialchars($reapply_time); ?></strong></p>
                                     </blockquote>
                                 </div>
 
@@ -242,7 +247,6 @@
                                         <h4>☀️ Sun Safety Tips</h4>
                                         <ul class="sun-safety-list">
                                             <?php 
-                                            $safety_tips = $translations[$language]["safety_tips"] ?? [];
                                             foreach ($safety_tips as $tip) {
                                                 echo "<li>✅ " . htmlspecialchars($tip) . "</li>";
                                             }

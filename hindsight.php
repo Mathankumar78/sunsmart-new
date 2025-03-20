@@ -51,35 +51,46 @@ if (isset($_GET['fetchData']) && isset($_GET['year']) && isset($_GET['sex'])) {
 
 // Load API Key from Environment Variable or .env File
 $apiKey = getenv("API_KEY") ?: (file_exists(__DIR__ . "/.env") ? parse_ini_file(__DIR__ . "/.env")['API_KEY'] : null);
+$wapiKey = getenv("WAPI_KEY") ?: (file_exists(__DIR__ . "/.env") ? parse_ini_file(__DIR__ . "/.env")['WAPI_KEY'] : null);
 
 if (!$apiKey) {
     die("⚠️ API Key is missing! Check .env file or environment variables.");
 }
 
-// Function to get Latitude & Longitude for a given location
+// Function to get Latitude & Longitude for a given location using WeatherAPI
 function getLatLon($location) {
-    global $apiKey;
-    $url = "http://api.openweathermap.org/geo/1.0/direct?q=" . urlencode($location . ",AU") . "&limit=1&appid=" . $apiKey;
+    global $wapiKey;
 
+    $url = "http://api.openweathermap.org/geo/1.0/direct?q=" . urlencode($location . ", AU") . "&limit=1&appid=" . $wapiKey;
     $response = @file_get_contents($url);
     $data = json_decode($response, true);
 
-    if (!empty($data)) {
-        return [$data[0]['lat'], $data[0]['lon'], $data[0]['name'], $data[0]['state'] ?? 'Unknown State'];
+    if (!empty($data) && isset($data[0]['lat']) && isset($data[0]['lon'])) {
+        return [$data[0]['lat'], $data[0]['lon'], $data[0]['name'] ?? "Unknown City", $data[0]['state'] ?? "Unknown State"];
     }
-    return [0, 0, "Unknown", ""]; // Default if API fails
+
+    return [0, 0, "Unknown", "Unknown"]; // Ensure four values are returned
 }
 
-// Function to get Current UV Index using OpenWeatherMap's `/uvi` API
 function getUVIndex($lat, $lon) {
     global $apiKey;
-    $url = "https://api.openweathermap.org/data/2.5/uvi?appid=" . $apiKey . "&lat=" . $lat . "&lon=" . $lon;
 
+    $url = "https://api.weatherapi.com/v1/current.json?key=" . $apiKey . "&q=" . $lat . "," . $lon;
     $response = @file_get_contents($url);
+
+    if (!$response) {
+        return "❌ API Error: No response from WeatherAPI";
+    }
+
     $data = json_decode($response, true);
 
-    return $data['value'] ?? "UV data not available"; // 'value' contains the UV index
+    if (!isset($data['current']['uv'])) {
+        return "⚠️ UV data not available for this location";
+    }
+
+    return $data['current']['uv'];
 }
+
 
 // Function to simulate UV Index trends (since `/uvi` only gives current data)
 function getUVIndexOverTime($currentUV) {

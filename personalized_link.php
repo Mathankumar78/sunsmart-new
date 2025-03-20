@@ -104,8 +104,6 @@
                                                 <option value="Chinese">Chinese</option>
                                                 <option value="Urdu">Urdu</option>
                                                 <option value="Hindi">Hindi</option>
-                                                <option value="Russian">Russian</option>
-                                                <option value="Mandarin">Mandarin</option>
                                             </select>
                                         </div>
                                     </div>
